@@ -1,15 +1,17 @@
-import Game from './Game.js';
+import Canvas from './Canvas.js';
 import Square from './Square.js';
 
 export default class Map {
     constructor() {
         this.listSquare = Array();
+        this.canvas = new Canvas();
     }
 
     async loadMap(file) {
         let result = await fetch(`/data/${file}.json`);
         let data = await result.json();
         Object.assign(this, data);
+        this.canvas.setStep(this.size);
         /*for (let i = 0; i < this.listSquare.length; i++) {
             this.listSquare[i] = new Square(this.listSquare[i].x, this.listSquare[i].y, this.listSquare[i].tile);
         }*/
@@ -22,7 +24,7 @@ export default class Map {
 
     display() {
         for (let square of this.listSquare) {
-            game.display(square);
+            square.display(this.canvas);
         }
     }
 }
