@@ -1,3 +1,5 @@
+import Tiles from '/data/Tiles.js';
+
 export default class Canvas {
     constructor(element) {
         this.element = element;
@@ -16,15 +18,30 @@ export default class Canvas {
     }
 
     async display(element) {
-        let result = await fetch(`/tiles/square.png`);
-        let image = await createImageBitmap(await result.blob());
+        switch (element.constructor.name) {
+            case "Square":
+                this.displaySquare(element);
+        }
+    }
+
+    displaySquare(square) {
+        if (square.tile == "BUSH") {
+            this.draw(Tiles.get("tiles2", "GRASS"), { x: square.x, y: square.y });
+        }
+        this.draw(Tiles.get("tiles2", square.tile), { x: square.x, y: square.y });
+        if (square.tile == "TREE") {
+            this.draw(Tiles.get("tiles2", "UPTREE"), { x: square.x, y: square.y - 1 });
+        }
+    }
+
+    draw(image, position) {
         this.context.drawImage(image,
             0,
             0,
-            31,
-            31,
-            element.x * this.stepX,
-            element.y * this.stepY,
+            image.width,
+            image.height,
+            position.x * this.stepX,
+            position.y * this.stepY,
             this.stepX,
             this.stepY)
     }
