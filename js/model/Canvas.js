@@ -2,7 +2,14 @@ import Tiles from '/data/Tiles.js';
 
 export default class Canvas {
     constructor(element) {
-        this.element = element;
+        if (element == undefined) {
+            this.element = document.createElement("canvas");
+            document.querySelector("#console").appendChild(this.element);
+        } else {
+            this.element = element;
+        }
+        this.element.classList.add("canvas");
+
         this.context = this.element.getContext("2d");
 
         this.width = this.element.offsetWidth;
@@ -17,24 +24,10 @@ export default class Canvas {
         this.stepY = this.height / size.height;
     }
 
-    async display(element) {
-        switch (element.constructor.name) {
-            case "Square":
-                this.displaySquare(element);
-        }
-    }
 
-    displaySquare(square) {
-        if (square.tile == "BUSH") {
-            this.draw(Tiles.get("tiles2", "GRASS"), { x: square.x, y: square.y });
-        }
-        this.draw(Tiles.get("tiles2", square.tile), { x: square.x, y: square.y });
-        if (square.tile == "TREE") {
-            this.draw(Tiles.get("tiles2", "UPTREE"), { x: square.x, y: square.y - 1 });
-        }
-    }
 
-    draw(image, position) {
+    draw(file, tile, position) {
+        let image = Tiles.get(file, tile);
         this.context.drawImage(image,
             0,
             0,
@@ -44,5 +37,9 @@ export default class Canvas {
             position.y * this.stepY,
             this.stepX,
             this.stepY)
+    }
+
+    clear() {
+        this.context.clearRect(0, 0, this.element.width, this.element.height);
     }
 }
