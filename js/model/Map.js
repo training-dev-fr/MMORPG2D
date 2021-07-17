@@ -1,3 +1,4 @@
+import Grid from './Astar/Grid.js';
 import Canvas from './Canvas.js';
 import Square from './Square.js';
 
@@ -20,6 +21,7 @@ export default class Map {
                 this.listSquare.push(new Square(x, y));
             }
         }
+        this.grid = new Grid(this.listSquare, this.size);
     }
 
     display() {
