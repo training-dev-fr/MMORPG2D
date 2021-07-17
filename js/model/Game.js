@@ -1,7 +1,5 @@
 import Map from './Map.js';
-import Canvas from './Canvas.js';
 import TileManager from './TileManager.js';
-import Character from './Character.js';
 
 export default class Game {
     constructor() {
@@ -10,7 +8,7 @@ export default class Game {
 
     async init() {
         this.tileManager = new TileManager();
-        await this.tileManager.loadFile("map", "tiles2", 5, 1);
+        await this.tileManager.loadFile("map", "tiles", 6, 1);
         await this.tileManager.loadFile("character", "char1", 4, 4);
         await this.tileManager.loadFile("character", "char2", 4, 4);
         await this.tileManager.loadFile("character", "char3", 4, 4);
@@ -19,7 +17,16 @@ export default class Game {
         await this.map.loadMap("map2");
         this.map.display();
 
-        this.character = Array();
+        let path = this.map.grid.getPath(game.map.listSquare[0], game.map.listSquare[624]);
+        for (let square of path) {
+            square.displayPath(this.map.canvas);
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+
+
+
+
+        /*this.character = Array();
 
         let char1 = new Character("Mostuf", "Vampyre", 5, 5, "BOTTOM");
         char1.display();
@@ -35,7 +42,7 @@ export default class Game {
         let char3 = new Character("Michel", "Man", 10, 6, "LEFT");
         char3.display();
         char3.animate();
-        this.character.push(char3);
+        this.character.push(char3);*/
 
     }
 }

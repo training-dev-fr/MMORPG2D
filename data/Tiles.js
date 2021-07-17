@@ -10,6 +10,7 @@ Tiles.MAP.GROUND = 1;
 Tiles.MAP.TREE = 2;
 Tiles.MAP.UPTREE = 3;
 Tiles.MAP.BUSH = 4;
+Tiles.MAP.MARK = 5;
 
 Tiles.CHAR = {};
 Tiles.CHAR.BOTTOM0 = 0;
