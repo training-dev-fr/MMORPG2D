@@ -24,3 +24,7 @@
 body {
     margin: 0px;
 }
+
+.canvas.top {
+    z-index: 9999;
+}

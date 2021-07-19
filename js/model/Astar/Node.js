@@ -1,7 +1,6 @@
 export default class Node {
     constructor(square) {
-        this.x = square.x;
-        this.y = square.y;
+        this.position = square.position;
         this.square = square;
         this.isBlocked = false;
         switch (square.tile.key) {
@@ -9,13 +8,13 @@ export default class Node {
                 this.isBlocked = true;
                 break;
             case "GRASS":
-                this.coeff = 1;
+                this.weight = 1;
                 break;
             case "GROUND":
-                this.coeff = 0.8;
+                this.weight = 0.6;
                 break;
             case "BUSH":
-                this.coeff = 9;
+                this.weight = 2;
                 break;
         }
         this.isBlocked = square.tile.key == "TREE";
@@ -24,7 +23,7 @@ export default class Node {
     heuristic(parent, destination) {
         this.parent = parent;
         this.g = this.parent.g + 1;
-        this.h = (Math.abs(this.x - destination.x) + Math.abs(this.y - destination.y)) * this.coeff;
+        this.h = (Math.abs(this.position.x - destination.x) + Math.abs(this.position.y - destination.y)) * this.weight;
         this.f = this.h + this.g;
     }
 }

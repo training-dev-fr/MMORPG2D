@@ -1,5 +1,6 @@
 import Grid from './Astar/Grid.js';
 import Canvas from './Canvas.js';
+import ClickManager from './ClickManager.js';
 import Square from './Square.js';
 
 export default class Map {
@@ -13,6 +14,7 @@ export default class Map {
         let data = await result.json();
         Object.assign(this, data);
         this.canvas.setStep(this.size);
+        this.clickManager = new ClickManager(this.size);
         /*for (let i = 0; i < this.listSquare.length; i++) {
             this.listSquare[i] = new Square(this.listSquare[i].x, this.listSquare[i].y, this.listSquare[i].tile);
         }*/
@@ -28,5 +30,17 @@ export default class Map {
         for (let square of this.listSquare) {
             square.display(this.canvas);
         }
+    }
+
+    onclick(callback) {
+        this.click = callback;
+    }
+
+    onrightclick(callback) {
+        this.rightclick = callback;
+    }
+
+    getSquare(position) {
+        return this.listSquare.find(square => square.position.x == position.x && square.position.y == position.y);
     }
 }

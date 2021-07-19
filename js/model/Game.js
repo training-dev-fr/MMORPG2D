@@ -1,5 +1,6 @@
 import Map from './Map.js';
 import TileManager from './TileManager.js';
+import Character from './Character.js';
 
 export default class Game {
     constructor() {
@@ -17,20 +18,26 @@ export default class Game {
         await this.map.loadMap("map2");
         this.map.display();
 
-        let path = this.map.grid.getPath(game.map.listSquare[0], game.map.listSquare[624]);
+        let char1 = new Character("Mostuf", "Vampyre", 5, 5, "BOTTOM");
+        char1.display();
+
+        /*let path = this.map.grid.getPath(game.map.listSquare[0], game.map.listSquare[624]);
         for (let square of path) {
             square.displayPath(this.map.canvas);
             await new Promise(resolve => setTimeout(resolve, 100));
-        }
+        }*/
+
+        this.map.onclick((position) => {
+            let path = this.map.grid.getPath(this.map.getSquare(char1.position), this.map.getSquare(position));
+            char1.moveTo(path);
+        });
 
 
 
 
         /*this.character = Array();
 
-        let char1 = new Character("Mostuf", "Vampyre", 5, 5, "BOTTOM");
-        char1.display();
-        char1.animate();
+        
         this.character.push(char1);
 
 
