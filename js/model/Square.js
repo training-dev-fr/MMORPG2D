@@ -1,7 +1,6 @@
 export default class Square {
     constructor(x, y, tile) {
-        this.x = x;
-        this.y = y;
+        this.position = { x: x, y: y };
         //this.tile = tile;
 
         switch (Math.floor(Math.random() * 10)) {
@@ -28,15 +27,15 @@ export default class Square {
 
     display(canvas) {
         if (this.tile.key == "BUSH") {
-            canvas.draw("tiles", { namespace: "MAP", key: "GRASS" }, { x: this.x, y: this.y });
+            canvas.draw("tiles", { namespace: "MAP", key: "GRASS" }, { x: this.position.x, y: this.position.y });
         }
-        canvas.draw("tiles", this.tile, { x: this.x, y: this.y });
+        canvas.draw("tiles", this.tile, { x: this.position.x, y: this.position.y });
         if (this.tile.key == "TREE") {
-            canvas.draw("tiles", { namespace: "MAP", key: "UPTREE" }, { x: this.x, y: this.y - 1 });
+            canvas.draw("tiles", { namespace: "MAP", key: "UPTREE" }, { x: this.position.x, y: this.position.y - 1 });
         }
     }
 
     displayPath(canvas) {
-        canvas.draw("tiles", { namespace: "MAP", key: "MARK" }, { x: this.x, y: this.y });
+        canvas.draw("tiles", { namespace: "MAP", key: "MARK" }, { x: this.position.x, y: this.position.y });
     }
 }

@@ -10,7 +10,7 @@ export default class Grid {
         let path = Array();
         let hierarchicPath = this.findPath(origin, destination);
         while (hierarchicPath != null) {
-            path.push(hierarchicPath.square);
+            path.push(hierarchicPath);
             hierarchicPath = hierarchicPath.parent;
         }
         return path.reverse();
@@ -26,17 +26,17 @@ export default class Grid {
         this.closeList = [];
         do {
             let bestNode = this.getBestNode();
-            this.openList = this.openList.filter(node => node.x != bestNode.x || node.y != bestNode.y);
+            this.openList = this.openList.filter(node => node.position.x != bestNode.position.x || node.position.y != bestNode.position.y);
 
             let checkList = this.getChildNode(bestNode, destination);
 
             for (let checknode of checkList) {
                 if (!checknode.isBlocked) {
-                    if (checknode.x == destination.x && checknode.y == destination.y) {
+                    if (checknode.position.x == destination.position.x && checknode.position.y == destination.position.y) {
                         return checknode;
                     }
-                    if (!this.openList.some(node => checknode.x == node.x && checknode.y == node.y && node.f < checknode.f) &&
-                        !this.closeList.some(node => checknode.x == node.x && checknode.y == node.y)) {
+                    if (!this.openList.some(node => checknode.position.x == node.position.x && checknode.position.y == node.position.y && node.f < checknode.f) &&
+                        !this.closeList.some(node => checknode.position.x == node.position.x && checknode.position.y == node.position.y)) {
                         this.openList.push(checknode);
                     }
                 }
@@ -61,27 +61,27 @@ export default class Grid {
     getChildNode(parent, destination) {
         let checkList = Array();
 
-        if (parent.x > 0) {
-            let nodeLeft = new Node(this.listSquare.find(square => square.x == parent.x - 1 && square.y == parent.y));
+        if (parent.position.x > 0) {
+            let nodeLeft = new Node(this.listSquare.find(square => square.position.x == parent.position.x - 1 && square.position.y == parent.position.y));
             nodeLeft.heuristic(parent, destination);
             checkList.push(nodeLeft);
         }
 
-        if (parent.x < this.size.width - 1) {
-            let nodeRight = new Node(this.listSquare.find(square => square.x == parent.x + 1 && square.y == parent.y));
+        if (parent.position.x < this.size.width - 1) {
+            let nodeRight = new Node(this.listSquare.find(square => square.position.x == parent.position.x + 1 && square.position.y == parent.position.y));
             nodeRight.heuristic(parent, destination);
             checkList.push(nodeRight);
         }
 
-        if (parent.y > 0) {
-            let nodeTop = new Node(this.listSquare.find(square => square.x == parent.x && square.y == parent.y - 1));
+        if (parent.position.y > 0) {
+            let nodeTop = new Node(this.listSquare.find(square => square.position.x == parent.position.x && square.position.y == parent.position.y - 1));
             nodeTop.heuristic(parent, destination);
             checkList.push(nodeTop);
         }
 
 
-        if (parent.y < this.size.height - 1) {
-            let nodeBottom = new Node(this.listSquare.find(square => square.x == parent.x && square.y == parent.y + 1));
+        if (parent.position.y < this.size.height - 1) {
+            let nodeBottom = new Node(this.listSquare.find(square => square.position.x == parent.position.x && square.position.y == parent.position.y + 1));
             nodeBottom.heuristic(parent, destination);
             checkList.push(nodeBottom);
         }
