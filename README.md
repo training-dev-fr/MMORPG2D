@@ -1,6 +1,7 @@
 # MMORPG2D
 
 Retrouver le cours associé à ce repo <a href="https://www.training-dev.fr/Cours/Les-bases-d-un-MMORPG-avec-canvas-et-javascript" target="blank">ici</a>
+[go]https://www.training-dev.fr/Cours/Les-bases-d-un-MMORPG-avec-canvas-et-javascript){:target="_blank" rel="noopener"}
 
 <p align="center">
 	<a href="https://www.training-dev.fr" target="blank">
